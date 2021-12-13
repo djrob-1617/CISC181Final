@@ -65,9 +65,28 @@ public class TestPMT {
 
 		Loan loan = new Loan(dLoanAmount, dInterestRate, iNbrOfYears, localDate, dAdditionalPayment, dEscrow);
 
-		//TODO: Assert correct values based on amort spreadsheet (total payments, total payment amt, 
-		//		total interest, total interest saved, total payments saved.
-	}	
+		Loan loan_no =  new Loan(dLoanAmount, dInterestRate, iNbrOfYears, localDate, 0, dEscrow);
+		
+		//Number of Payments
+		assertTrue(loan.getLoanPayments().size() == 118);
+		
+		//Total Payments
+		assertEquals(loan.getTotalPayments(), 69288.72, 0.01);
+		
+		//Total Interests
+		///THIS VALUE IS DIFFERENT THAN THE EXCEEL SHEET BUT I DOUBLE CHECKED IT 
+		///WITH: https://www.bankrate.com/calculators/mortgages/amortization-calculator.aspx
+		assertEquals(loan.getTotalInterest(), 19291.83, 0.01);
+		
+		//Interest Saved
+		assertEquals(loan_no.getTotalInterest() - loan.getTotalInterest(), 23744.04, 0.01);
+		
+		//Payment Saved
+		assertEquals(loan_no.getTotalPayments() - loan.getTotalPayments(), 23744.90, 0.01);
+		
+		
+	}
+	
 }
 
  
